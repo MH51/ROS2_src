@@ -1,0 +1,110 @@
+ros2 launch urdf_tutorial display.launch.py model:=/opt/ros/jazzy/share/urdf_tutorial/urdf/08-macroed.urdf.xacro
+<this the correct coomond >
+http://wiki.ros.org/urdf/XML
+os2 launch urdf_tutorial display.launch.py model:=/opt/ros/jazzy/share/urdf_tutorial/urdf/08-macroed.urdf.xacro
+ros2 launch urdf_tutorial display.launch.py model:=/home/mh/n/a.urdf
+
+The issues you are encountering with the NVIDIA driver and RViz2 seem to stem from the driver installation. Let's try to address the driver installation problem first.
+
+### Step-by-Step Approach to Fix NVIDIA Driver Issues
+
+#### Step 1: Purge Existing NVIDIA Drivers
+First, remove any existing NVIDIA drivers to ensure a clean slate.
+
+1. **Purge NVIDIA drivers**:
+   ```bash
+   sudo apt-get purge nvidia-*
+   sudo apt-get autoremove
+   ```
+
+#### Step 2: Add NVIDIA PPA (if not already added)
+If you haven't already, add the NVIDIA PPA to ensure you have access to the latest drivers.
+
+1. **Add the NVIDIA PPA**:
+   ```bash
+   sudo add-apt-repository ppa:graphics-drivers/ppa
+   sudo apt-get update
+   ```
+
+#### Step 3: Install NVIDIA Driver
+Identify the correct NVIDIA driver version for your GPU and install it. The NVIDIA P1000 typically uses drivers from the 450+ series, but ensure compatibility with your system.
+
+1. **Check available driver versions**:
+   ```bash
+   ubuntu-drivers devices
+   ```
+
+2. **Install the recommended driver**:
+   ```bash
+   sudo apt-get install nvidia-driver-<version>
+   ```
+
+   Replace `<version>` with the appropriate driver version number identified from the previous command.
+
+#### Step 4: Reboot and Verify
+After installation, reboot your system and verify the driver installation.
+
+1. **Reboot your system**:
+   ```bash
+   sudo reboot
+   ```
+
+2. **Verify NVIDIA driver installation**:
+   ```bash
+   nvidia-smi
+   ```
+
+#### Step 5: Install Missing Libraries
+Install any missing libraries required by OpenGL and graphics applications.
+
+1. **Install required libraries**:
+   ```bash
+   sudo apt-get install libgl1-mesa-dri
+   ```
+
+### Step 6: Verify Environment and RViz2
+1. **Verify the environment variables**:
+   ```bash
+   echo $DISPLAY
+   ```
+
+2. **Run RViz2 with default configuration**:
+   ```bash
+   rviz2 -d /opt/ros/jazzy/share/rviz2/rviz/default.rviz
+   ```
+
+### Troubleshooting Commands Summary
+Here's a summary of the commands to follow:
+
+```bash
+# Purge existing NVIDIA drivers
+sudo apt-get purge nvidia-*
+sudo apt-get autoremove
+
+# Add NVIDIA PPA and update package list
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+
+# Identify and install the recommended NVIDIA driver
+ubuntu-drivers devices
+sudo apt-get install nvidia-driver-<version>
+
+# Reboot the system
+sudo reboot
+
+# Verify NVIDIA driver installation
+nvidia-smi
+
+# Install missing libraries
+sudo apt-get install libgl1-mesa-dri
+
+# Verify environment variable
+echo $DISPLAY
+
+# Run RViz2 with default configuration
+rviz2 -d /opt/ros/jazzy/share/rviz2/rviz/default.rviz
+```
+
+By following these steps, you should be able to resolve the driver issues and get RViz2 working properly again. If you encounter any specific errors during these steps, please provide the details for further assistance.
+
+
