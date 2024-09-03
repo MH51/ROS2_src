@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="l" value="0.6" />
+
+  <material name="blue">
+    <color rgba="0 0 0.5 1" />
+  </material>
+
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1" />
+  </material>
+
+  <link name="base_footprint">
+  </link>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${l} ${l/2} ${l/3}" />
+      </geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0" />
+      <material name="blue" />
+    </visual>
+  </link>
+  
+  <xacro:macro name="wheel" params="prefix">
+    <link name="${prefix}_link">
+      <visual>
+        <geometry>
+          <cylinder radius="0.1" length="0.05" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="${pi / 2} 0 0" />
+        <material name="grey" />
+      </visual>
+    </link>
+  </xacro:macro>
+  
+  <xacro:wheel prefix="right" />
+  <xacro:wheel prefix="left" />
+
+  <link name="front">
+    <visual>
+      <geometry>
+        <sphere radius="0.07" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <material name="grey" />
+    </visual>
+  </link>
+  
+  <joint name="right" type="continuous">
+    <parent link="base_link" />
+    <child link="right_link" />
+    <origin xyz="${-l/4} -0.230 0.05" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="left" type="continuous">
+    <parent link="base_link" />
+    <child link="left_link" />
+    <origin xyz="${-l/4} 0.230 0.05" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="front1" type="revolute">
+    <parent link="base_link" />
+    <child link="front" />
+    <origin xyz="${l/3} 0 0.0" rpy="0 0 0" />
+    <axis xyz="1 1 1" />
+    <limit effort="10.0" lower="-1.57" upper="1.57" velocity="1.0" />
+  </joint>
+
+  <joint name="ground" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.01" rpy="0 0 0" />
+  </joint>
+</robot>
