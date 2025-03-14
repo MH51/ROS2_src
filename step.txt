@@ -1,0 +1,12 @@
+$ cd t
+$ colcon build
+Starting >>> py_pkg  
+Finished <<< py_pkg [2.04s]          
+
+Summary: 1 package finished [2.69s]
+$ source ~/.bashrc
+
+$ ros2 run py_pkg test_node
+
+
+$cd ~/t/src/py_pkg/py_pkg
